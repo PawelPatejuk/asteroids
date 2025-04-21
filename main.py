@@ -1,9 +1,12 @@
 import pygame
+import sys
+
 from constants import *
 from player import *
 from circleshape import *
 from asteroid import *
 from asteroidfield import *
+from shot import *
 
 def main():
 	pygame.init()
@@ -24,6 +27,9 @@ def main():
 
 	asteroid_field = AsteroidField()
 
+	shots = pygame.sprite.Group()
+	Shot.containers = (shots, updatable, drawable)
+
 	print("Starting Asteroids!")
 	print(f"Screen width: {SCREEN_WIDTH}")
 	print(f"Screen height: {SCREEN_HEIGHT}")
@@ -34,6 +40,10 @@ def main():
 				return
 
 		updatable.update(dt)
+
+		for a in asteroids:
+			if CircleShape.collision(player, a):
+				sys.exit()
 
 		pygame.Surface.fill(screen, (0,0,0))
 		for d in drawable:
