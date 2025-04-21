@@ -42,7 +42,13 @@ def main():
 		updatable.update(dt)
 
 		for a in asteroids:
-			if CircleShape.collision(player, a):
+			for s in shots:
+				if CircleShape.collision(a, s):
+					a.split()
+					s.kill()
+
+			if CircleShape.collision(a, player):
+				print("Game over")
 				sys.exit()
 
 		pygame.Surface.fill(screen, (0,0,0))
